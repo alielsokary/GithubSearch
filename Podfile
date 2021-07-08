@@ -8,6 +8,8 @@ target 'GithubSearch' do
   
   pod 'SwiftLint'
 	pod 'R.swift'
+	
+	pod 'PKHUD'
 
   target 'GithubSearchTests' do
     inherit! :search_paths
