@@ -7,6 +7,7 @@ target 'GithubSearch' do
   # Pods for GithubSearch
   
   pod 'SwiftLint'
+	pod 'R.swift'
 
   target 'GithubSearchTests' do
     inherit! :search_paths
