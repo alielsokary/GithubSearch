@@ -24,6 +24,7 @@ class GithubService {
 		return session.rx
 			.json(url: url)
 			.flatMap { json throws -> Observable<[Repository]> in
+
 				guard
 					let json = json as? [String: Any],
 					let itemsJSON = json["items"] as? [[String: Any]]

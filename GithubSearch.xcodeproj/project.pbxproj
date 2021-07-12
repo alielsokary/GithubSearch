@@ -19,6 +19,9 @@
 		415CA2A6269727610093F0CD /* Repositories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 415CA2A5269727610093F0CD /* Repositories.swift */; };
 		415CA2A8269727790093F0CD /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 415CA2A7269727790093F0CD /* Repository.swift */; };
 		416EB38F269CC1DC004622FF /* GithubService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416EB38E269CC1DC004622FF /* GithubService.swift */; };
+		416EB398269CCD96004622FF /* RepoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416EB396269CCD96004622FF /* RepoTableViewCell.swift */; };
+		416EB399269CCD96004622FF /* RepoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 416EB397269CCD96004622FF /* RepoTableViewCell.xib */; };
+		4170A2C0269CE79B007497DA /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4170A2BF269CE79B007497DA /* UIImageView+Extension.swift */; };
 		6DCD1B3781FF9C794CBB7CE4 /* Pods_GithubSearch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A723F750AE4897FB8D5BD556 /* Pods_GithubSearch.framework */; };
 		B441F1E98AE5202A378275A3 /* Pods_GithubSearch_GithubSearchUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78346E690C25E7D86BAFB372 /* Pods_GithubSearch_GithubSearchUITests.framework */; };
 		DB17441537EEBFF36DBCCEB8 /* Pods_GithubSearchTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12D00267DCC7381609B85910 /* Pods_GithubSearchTests.framework */; };
@@ -62,6 +65,9 @@
 		415CA2A5269727610093F0CD /* Repositories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repositories.swift; sourceTree = "<group>"; };
 		415CA2A7269727790093F0CD /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 		416EB38E269CC1DC004622FF /* GithubService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubService.swift; sourceTree = "<group>"; };
+		416EB396269CCD96004622FF /* RepoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoTableViewCell.swift; sourceTree = "<group>"; };
+		416EB397269CCD96004622FF /* RepoTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RepoTableViewCell.xib; sourceTree = "<group>"; };
+		4170A2BF269CE79B007497DA /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
 		78346E690C25E7D86BAFB372 /* Pods_GithubSearch_GithubSearchUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GithubSearch_GithubSearchUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A315E0D27384E9624233878 /* Pods-GithubSearch.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GithubSearch.debug.xcconfig"; path = "Target Support Files/Pods-GithubSearch/Pods-GithubSearch.debug.xcconfig"; sourceTree = "<group>"; };
 		A232057135438E035B8CB36E /* Pods-GithubSearch-GithubSearchUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GithubSearch-GithubSearchUITests.debug.xcconfig"; path = "Target Support Files/Pods-GithubSearch-GithubSearchUITests/Pods-GithubSearch-GithubSearchUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -137,12 +143,14 @@
 		415CA26A269707EC0093F0CD /* GithubSearch */ = {
 			isa = PBXGroup;
 			children = (
+				4170A2BD269CE771007497DA /* Library */,
 				416EB393269CCB49004622FF /* App */,
 				416EB390269CCB2D004622FF /* Scenes */,
 				415CA2A42697274C0093F0CD /* Model */,
 				415CA29F269721F60093F0CD /* Networking */,
 				416EB395269CCB70004622FF /* Storyboards */,
 				416EB394269CCB5B004622FF /* Support Files */,
+				415CA279269707EF0093F0CD /* Info.plist */,
 				415CA29D26971C600093F0CD /* R.generated.swift */,
 			);
 			path = GithubSearch;
@@ -203,6 +211,7 @@
 		416EB392269CCB3C004622FF /* View */ = {
 			isa = PBXGroup;
 			children = (
+				416EB39A269CCD9A004622FF /* Cell */,
 				415CA26F269707EC0093F0CD /* SearchViewController.swift */,
 			);
 			path = View;
@@ -221,7 +230,6 @@
 			children = (
 				415CA274269707EF0093F0CD /* Assets.xcassets */,
 				415CA276269707EF0093F0CD /* LaunchScreen.storyboard */,
-				415CA279269707EF0093F0CD /* Info.plist */,
 			);
 			path = "Support Files";
 			sourceTree = "<group>";
@@ -232,6 +240,31 @@
 				415CA271269707EC0093F0CD /* Main.storyboard */,
 			);
 			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		416EB39A269CCD9A004622FF /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				416EB396269CCD96004622FF /* RepoTableViewCell.swift */,
+				416EB397269CCD96004622FF /* RepoTableViewCell.xib */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		4170A2BD269CE771007497DA /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				4170A2BE269CE776007497DA /* Extensions */,
+			);
+			path = Library;
+			sourceTree = "<group>";
+		};
+		4170A2BE269CE776007497DA /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				4170A2BF269CE79B007497DA /* UIImageView+Extension.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		478479A492A6AF76A171AE33 /* Frameworks */ = {
@@ -357,6 +390,7 @@
 				415CA278269707EF0093F0CD /* LaunchScreen.storyboard in Resources */,
 				415CA275269707EF0093F0CD /* Assets.xcassets in Resources */,
 				415CA273269707EC0093F0CD /* Main.storyboard in Resources */,
+				416EB399269CCD96004622FF /* RepoTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -522,9 +556,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4170A2C0269CE79B007497DA /* UIImageView+Extension.swift in Sources */,
 				415CA2A8269727790093F0CD /* Repository.swift in Sources */,
 				416EB38F269CC1DC004622FF /* GithubService.swift in Sources */,
 				415CA270269707EC0093F0CD /* SearchViewController.swift in Sources */,
+				416EB398269CCD96004622FF /* RepoTableViewCell.swift in Sources */,
 				415CA26C269707EC0093F0CD /* AppDelegate.swift in Sources */,
 				415CA2A3269726330093F0CD /* APIError.swift in Sources */,
 				415CA29E26971C600093F0CD /* R.generated.swift in Sources */,
