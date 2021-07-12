@@ -14,6 +14,7 @@ enum APIError: Error {
 	case requestTimeout
 	case internalServerError
 	case gatewatTimeout
+	case parsingError
 	case unknownError
 }
 
@@ -30,6 +31,8 @@ extension APIError: LocalizedError {
 			return "Internal Server error"
 		case .gatewatTimeout:
 			return "Gateway timeout"
+		case .parsingError:
+			return "Error parsing the request"
 		case .unknownError:
 			return "Something went wrong, please try again later"
 		}
