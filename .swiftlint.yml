@@ -1,0 +1,21 @@
+disabled_rules: # rule identifiers to exclude from running
+  - inclusive_language
+  
+identifier_name:
+  max_length:
+    error: 60
+  min_length:
+    error: 3
+  excluded:
+    - id
+
+line_length:
+  warning: 145
+  error: 150
+  ignores_function_declarations: false
+  ignores_comments: true
+  ignores_urls: true
+
+excluded: # paths to ignore during linting. Takes precedence over `included`.
+  - Pods
+  - "*.generated.swift"
