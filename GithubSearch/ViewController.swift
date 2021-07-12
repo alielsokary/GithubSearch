@@ -7,12 +7,22 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 class ViewController: UIViewController {
 
+	private let disposeBag = DisposeBag()
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		// Do any additional setup after loading the view.
+		let service = GithubService()
+
+		service.search("tetris")
+			.subscribe { [weak self] repo in
+			print(repo)
+		}.disposed(by: disposeBag)
+
 	}
 
 }
