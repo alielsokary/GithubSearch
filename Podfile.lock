@@ -1,28 +1,46 @@
 PODS:
+  - netfox (1.19.0)
   - PKHUD (5.3.0)
   - R.swift (5.4.0):
     - R.swift.Library (~> 5.3.0)
   - R.swift.Library (5.3.0)
+  - RxCocoa (6.1.0):
+    - RxRelay (= 6.1.0)
+    - RxSwift (= 6.1.0)
+  - RxRelay (6.1.0):
+    - RxSwift (= 6.1.0)
+  - RxSwift (6.1.0)
   - SwiftLint (0.43.1)
 
 DEPENDENCIES:
+  - netfox
   - PKHUD
   - R.swift
+  - RxCocoa (= 6.1.0)
+  - RxSwift (= 6.1.0)
   - SwiftLint
 
 SPEC REPOS:
   trunk:
+    - netfox
     - PKHUD
     - R.swift
     - R.swift.Library
+    - RxCocoa
+    - RxRelay
+    - RxSwift
     - SwiftLint
 
 SPEC CHECKSUMS:
+  netfox: efeec1d23406df6cd605212f09a40957bb5654eb
   PKHUD: 98f3e4bc904b9c916f1c5bb6d765365b5357291b
   R.swift: c533450b0f7dc494e0993f5f1a1db925d84c3006
   R.swift.Library: 0fc583cb55a99e28901299cc451614cad1161962
+  RxCocoa: 5c51f02d562cbd94629f6c26cf0c80fe4ab8d343
+  RxRelay: 483e1a19fad961b41f0b0c0bee506f46c1ae14fe
+  RxSwift: a834e5c538e89eca0cae86f403f4fbf0336786ce
   SwiftLint: 99f82d07b837b942dd563c668de129a03fc3fb52
 
-PODFILE CHECKSUM: 3bc370e62af258676bbc0d08cc2714b6db9120cd
+PODFILE CHECKSUM: d2b9fca01a7a06043bb23ed689f5f39e3e1ceb5c
 
 COCOAPODS: 1.10.1

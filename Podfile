@@ -5,6 +5,12 @@ target 'GithubSearch' do
   use_frameworks!
 
   # Pods for GithubSearch
+	
+	pod 'RxSwift', '6.1.0'
+	pod 'RxCocoa', '6.1.0'
+	
+	pod 'netfox'
+
   
   pod 'SwiftLint'
 	pod 'R.swift'
