@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  SearchViewController.swift
 //  GithubSearch
 //
 //  Created by Ali Elsokary on 08/07/2021.
@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class ViewController: UIViewController {
+class SearchViewController: UIViewController {
 
 	private let disposeBag = DisposeBag()
 
