@@ -27,6 +27,7 @@ final class SearchViewController: UIViewController {
 		super.viewDidLoad()
 		setupUI()
 		setupBindings()
+		selectionBindings()
 
 	}
 
@@ -79,22 +80,38 @@ private extension SearchViewController {
 					return .just([])
 				}
 				return self.service.search(query)
-					.catch { _ in
+					.catch { error in
+						print(error)
 				  return Observable.empty()
-					}.map { $0 }
+					}.map { $0.items ?? [] }
 		}.observe(on: MainScheduler.instance)
 			.bind(to: tableView.rx.items(cellIdentifier: cellIdentifier, cellType: RepoTableViewCell.self)) { [weak self] (_, repo, cell) in
-				print(repo)
 				self?.setupCell(cell: cell, repo: repo)
 		}
 		.disposed(by: disposeBag)
 	}
 
+	func selectionBindings() {
+		Observable
+			.zip(tableView.rx.itemSelected, tableView.rx.modelSelected(Repository.self))
+			.observe(on: MainScheduler.instance)
+			.bind { [weak self] _, repo in
+				guard let self = self else { return }
+				guard let repoDetailsVC = R.storyboard.main.repoDetailsViewController() else { return }
+				repoDetailsVC.viewModel.setRepoName(repo.name ?? "")
+				repoDetailsVC.viewModel.setRepoDescription(repo.itemDescription ?? "")
+				repoDetailsVC.viewModel.setRepoStarsCount(repo.stargazersCount ?? 0)
+				repoDetailsVC.viewModel.setRepoCreationDate(repo.createdAt ?? "")
+				self.show(repoDetailsVC, sender: nil)
+			}
+		.disposed(by: disposeBag)
+	}
+
 	private func setupCell(cell: RepoTableViewCell, repo: Repository) {
 		cell.selectionStyle = .none
-		cell.setTitle(repo.fullName)
-//		cell.setOwnerName(repo.owner?.login ?? "")
-//		cell.setOwnerAvatar(repo.owner?.avatarURL ?? "")
-		cell.setStars(repo.starsCount)
+		cell.setTitle(repo.fullName ?? "")
+		cell.setOwnerName(repo.owner?.login ?? "")
+		cell.setOwnerAvatar(repo.owner?.avatarURL ?? "")
+		cell.setDate(repo.createdAt?.formatedDate ?? "")
 	}
 }

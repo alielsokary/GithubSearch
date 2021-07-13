@@ -13,7 +13,7 @@ class RepoTableViewCell: UITableViewCell {
 	@IBOutlet weak var imgvAvatar: UIImageView!
 	@IBOutlet weak var lblName: UILabel!
 	@IBOutlet weak var lblOwnerName: UILabel!
-	@IBOutlet weak var lblStars: UILabel!
+	@IBOutlet weak var lblCreatedAt: UILabel!
 
 	override func awakeFromNib() {
         super.awakeFromNib()
@@ -23,9 +23,9 @@ class RepoTableViewCell: UITableViewCell {
 	private func setupUI() {
 		lblName.font = UIFont.systemFont(ofSize: 15, weight: .bold)
 		lblOwnerName.font = UIFont.systemFont(ofSize: 12, weight: .semibold)
-		lblStars.font = UIFont.systemFont(ofSize: 12, weight: .semibold)
+		lblCreatedAt.font = UIFont.systemFont(ofSize: 12, weight: .semibold)
 		lblName.textColor = UIColor.red.withAlphaComponent(0.5)
-		lblStars.textColor = UIColor.blue.withAlphaComponent(0.5)
+		lblCreatedAt.textColor = UIColor.blue.withAlphaComponent(0.5)
 
 	}
 
@@ -43,8 +43,8 @@ class RepoTableViewCell: UITableViewCell {
 		}
 	}
 
-	func setStars(_ stars: Int) {
-		lblStars.text = "Stars: \(stars)"
+	func setDate(_ date: String) {
+		lblCreatedAt.text = "\(date)"
 	}
 
 }

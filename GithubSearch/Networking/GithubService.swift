@@ -18,20 +18,18 @@ class GithubService {
 		self.session = session
 	}
 
-	func search(_ query: String) -> Observable<[Repository]> {
+	func search(_ query: String) -> Observable<Repositories> {
 		let encodedQuery = query.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!
 		let url = URL(string: "https://api.github.com/search/repositories?q=\(encodedQuery)&sort=stars&order=desc")!
-		return session.rx
-			.json(url: url)
-			.flatMap { json throws -> Observable<[Repository]> in
+		let req = URLRequest(url: url)
+		return session.rx.data(request: req)
+			.flatMap { data throws -> Observable<Repositories> in
 
-				guard
-					let json = json as? [String: Any],
-					let itemsJSON = json["items"] as? [[String: Any]]
-				else { return Observable.error(APIError.parsingError) }
-
-				let repositories = itemsJSON.compactMap(Repository.init)
-				return Observable.just(repositories)
+				let decoder = JSONDecoder()
+			   do {
+				return try Observable.of(decoder.decode(Repositories.self, from: data))
+			   }
 			}
 	}
+
 }
