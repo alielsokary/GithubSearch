@@ -6,11 +6,10 @@ target 'GithubSearch' do
 
   # Pods for GithubSearch
 	
-	pod 'RxSwift', '6.1.0'
-	pod 'RxCocoa', '6.1.0'
+	pod 'RxSwift'
+	pod 'RxCocoa'
 	
 	pod 'netfox'
-
   
   pod 'SwiftLint'
 	pod 'R.swift'

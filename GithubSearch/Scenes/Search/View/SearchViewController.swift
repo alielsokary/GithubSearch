@@ -28,7 +28,6 @@ final class SearchViewController: UIViewController {
 		setupUI()
 		setupBindings()
 		selectionBindings()
-
 	}
 
 }
