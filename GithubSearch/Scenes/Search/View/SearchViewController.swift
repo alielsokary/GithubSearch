@@ -20,7 +20,7 @@ final class SearchViewController: UIViewController {
 	private let disposeBag = DisposeBag()
 	private let cellIdentifier = R.nib.repoTableViewCell.identifier
 
-	let service = GithubService()
+	var viewModel: RepoSearchViewModel!
 
 	// MARK: Life Cycle
 	override func viewDidLoad() {
@@ -28,7 +28,6 @@ final class SearchViewController: UIViewController {
 		setupUI()
 		setupBindings()
 		selectionBindings()
-
 	}
 
 }
@@ -36,6 +35,7 @@ final class SearchViewController: UIViewController {
 // MARK: - Setup UI
 private extension SearchViewController {
 	func setupUI() {
+		self.navigationItem.title = "Github Search"
 		tableView.rowHeight = UITableView.automaticDimension
 		tableView.estimatedRowHeight = 100
 		configureSearchBarUI()
@@ -72,46 +72,25 @@ private extension SearchViewController {
 private extension SearchViewController {
 	func setupBindings() {
 		_ = searchBar.rx.text.orEmpty
-			.filter({ $0.count > 1 })
-			.throttle(.milliseconds(300), scheduler: MainScheduler.instance)
-			.distinctUntilChanged()
-			.flatMapLatest { query -> Observable<[Repository]> in
-				if query.isEmpty {
-					return .just([])
-				}
-				return self.service.search(query)
-					.catch { error in
-						print(error)
-				  return Observable.empty()
-					}.map { $0.items ?? [] }
-		}.observe(on: MainScheduler.instance)
-			.bind(to: tableView.rx.items(cellIdentifier: cellIdentifier, cellType: RepoTableViewCell.self)) { [weak self] (_, repo, cell) in
-				self?.setupCell(cell: cell, repo: repo)
-		}
-		.disposed(by: disposeBag)
+			.bind(to: viewModel.searchText)
+			.disposed(by: disposeBag)
+
+		viewModel.repositories
+		.observe(on: MainScheduler.instance)
+			.bind(to: tableView.rx.items(cellIdentifier: cellIdentifier, cellType: RepoTableViewCell.self)) { (_, viewModel, cell) in
+				cell.viewModel = viewModel
+		}.disposed(by: disposeBag)
+
+		viewModel.alertMessage
+			.subscribe(onNext: { [weak self] in self?.showAlert(message: $0) })
+			.disposed(by: disposeBag)
 	}
 
 	func selectionBindings() {
-		Observable
-			.zip(tableView.rx.itemSelected, tableView.rx.modelSelected(Repository.self))
+		tableView.rx.modelSelected(RepoViewModel.self)
 			.observe(on: MainScheduler.instance)
-			.bind { [weak self] _, repo in
-				guard let self = self else { return }
-				guard let repoDetailsVC = R.storyboard.main.repoDetailsViewController() else { return }
-				repoDetailsVC.viewModel.setRepoName(repo.name ?? "")
-				repoDetailsVC.viewModel.setRepoDescription(repo.itemDescription ?? "")
-				repoDetailsVC.viewModel.setRepoStarsCount(repo.stargazersCount ?? 0)
-				repoDetailsVC.viewModel.setRepoCreationDate(repo.createdAt ?? "")
-				self.show(repoDetailsVC, sender: nil)
-			}
-		.disposed(by: disposeBag)
+			.bind(to: viewModel.selectedRepo)
+			.disposed(by: disposeBag)
 	}
 
-	private func setupCell(cell: RepoTableViewCell, repo: Repository) {
-		cell.selectionStyle = .none
-		cell.setTitle(repo.fullName ?? "")
-		cell.setOwnerName(repo.owner?.login ?? "")
-		cell.setOwnerAvatar(repo.owner?.avatarURL ?? "")
-		cell.setDate(repo.createdAt?.formatedDate ?? "")
-	}
 }

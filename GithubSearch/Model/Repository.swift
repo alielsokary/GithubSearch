@@ -52,7 +52,7 @@ struct Repository: Codable {
 	let openIssuesCount: Int?
 	let license: License?
 	let forks, openIssues, watchers: Int?
-	let defaultBranch: DefaultBranch?
+	let defaultBranch: String?
 	let score: Int?
 
 	enum CodingKeys: String, CodingKey {
@@ -127,13 +127,6 @@ struct Repository: Codable {
 		case defaultBranch = "default_branch"
 		case score
 	}
-}
-
-enum DefaultBranch: String, Codable {
-	case ghPages = "gh-pages"
-	case main = "main"
-	case master = "master"
-	case tutorial = "tutorial"
 }
 
 // MARK: - License
