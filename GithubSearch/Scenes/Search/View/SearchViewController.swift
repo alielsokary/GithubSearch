@@ -20,7 +20,7 @@ final class SearchViewController: UIViewController {
 	private let disposeBag = DisposeBag()
 	private let cellIdentifier = R.nib.repoTableViewCell.identifier
 
-	let service = GithubService()
+	let viewModel = RepoSearchViewModel()
 
 	// MARK: Life Cycle
 	override func viewDidLoad() {
@@ -71,23 +71,19 @@ private extension SearchViewController {
 private extension SearchViewController {
 	func setupBindings() {
 		_ = searchBar.rx.text.orEmpty
-			.filter({ $0.count > 1 })
-			.throttle(.milliseconds(300), scheduler: MainScheduler.instance)
-			.distinctUntilChanged()
-			.flatMapLatest { query -> Observable<[Repository]> in
-				if query.isEmpty {
-					return .just([])
-				}
-				return self.service.search(query)
-					.catch { error in
-						print(error)
-				  return Observable.empty()
-					}.map { $0.items ?? [] }
-		}.observe(on: MainScheduler.instance)
+			.bind(to: viewModel.searchText)
+			.disposed(by: disposeBag)
+
+		viewModel.repository
+		.observe(on: MainScheduler.instance)
 			.bind(to: tableView.rx.items(cellIdentifier: cellIdentifier, cellType: RepoTableViewCell.self)) { [weak self] (_, repo, cell) in
 				self?.setupCell(cell: cell, repo: repo)
 		}
 		.disposed(by: disposeBag)
+
+		viewModel.alertMessage
+			.subscribe(onNext: { [weak self] in self?.showAlert(message: $0) })
+			.disposed(by: disposeBag)
 	}
 
 	func selectionBindings() {
