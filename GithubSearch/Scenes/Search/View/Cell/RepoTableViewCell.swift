@@ -17,6 +17,7 @@ class RepoTableViewCell: UITableViewCell {
 
 	override func awakeFromNib() {
         super.awakeFromNib()
+		self.selectionStyle = .none
 		setupUI()
     }
 
@@ -29,22 +30,23 @@ class RepoTableViewCell: UITableViewCell {
 
 	}
 
-	func setTitle(_ title: String) {
-		lblName.text = title
-	}
-
-	func setOwnerName(_ owenerName: String) {
-		lblOwnerName.text = "Owner: \(owenerName)"
-	}
-
-	func setOwnerAvatar(_ avatarUrl: String) {
-		if let url = URL(string: avatarUrl) {
-			imgvAvatar.load(url: url)
+	var viewModel: RepoViewModel! {
+		didSet {
+			self.configure()
 		}
 	}
 
-	func setDate(_ date: String) {
-		lblCreatedAt.text = "\(date)"
-	}
+}
 
+// MARK: - Configuration
+extension RepoTableViewCell {
+	private func configure() {
+		lblName.text = viewModel.name
+		lblOwnerName.text = "Owner: \(viewModel.ownerName)"
+		lblCreatedAt.text = "\(viewModel.createdAt)"
+
+		if let url = URL(string: viewModel.ownerAvatar) {
+			imgvAvatar.load(url: url)
+		}
+	}
 }

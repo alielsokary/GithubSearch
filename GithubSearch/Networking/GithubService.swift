@@ -10,7 +10,11 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-class GithubService {
+protocol GithubService {
+	func search(_ query: String) -> Observable<Repositories>
+}
+
+class GithubServiceImpl: GithubService {
 
 	private let session: URLSession
 
@@ -26,9 +30,9 @@ class GithubService {
 			.flatMap { data throws -> Observable<Repositories> in
 
 				let decoder = JSONDecoder()
-			   do {
-				return try Observable.of(decoder.decode(Repositories.self, from: data))
-			   }
+				do {
+					return try Observable.of(decoder.decode(Repositories.self, from: data))
+				}
 			}
 	}
 
